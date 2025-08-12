@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Talk2Trend - The Fashion Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(90deg, #1e3c72, #2a5298);
+  --nav-bg: #274caa;
+  --text: #333;
+  --price: #4CAF50;
+  --btn-bg: #28a745;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+.dark {
+  --bg: #0f111a;
+  --card-bg: #1f2436;
+  --header-bg: linear-gradient(90deg, #0d1b44, #1f295f);
+  --nav-bg: #1a274f;
+  --text: #e6e8ff;
+  --price: #7ed957;
+  --btn-bg: #256a3d;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color .3s, color .3s;
+}
+
+.main-header {
+  background: var(--header-bg);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.main-nav {
+  background-color: var(--nav-bg);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.product-card {
+  background-color: var(--card-bg);
+  box-shadow: 0 8px 20px var(--shadow);
+  transition: background-color .3s, box-shadow .3s;
+}
+
+.product-card__price {
+  color: var(--price);
+}
+
+.product-card__add-to-cart {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.main-footer {
+  background: var(--header-bg);
+  box-shadow: 0 -4px 10px var(--shadow);
+  transition: background .3s;
+}
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background-color .3s, color .3s;
+}
+
+
+        /* --- Header --- */
+        .main-header {
+             background: var(--header-bg);
+            padding: 20px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky; /* Make header sticky */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header__logo {
+            font-family: 'Playfair Display', serif; /* Elegant font for logo */
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #dbeafe; /* Lighter blue for welcome text */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease;
+        }
+
+        /* --- Navigation --- */
+        .main-nav {
+            background-color: var(--nav-bg);
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Increased gap for better spacing */
+            padding: 15px 0; /* More vertical padding */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .main-nav__link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600; /* Bolder links */
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav__link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00bfff; /* Bright blue underline */
+            transition: width 0.3s ease-out;
+        }
+
+        .main-nav__link:hover::after,
+        .main-nav__link--active::after {
+            width: 100%;
+        }
+
+        .main-nav__link:hover {
+            color: #00bfff; /* Bright blue on hover */
+            transform: translateY(-2px); /* Slight lift */
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, #a7e1f8, #e0f2ff); /* Lighter, more vibrant blue gradient */
+            padding: 80px 20px; /* More padding */
+            text-align: center;
+            animation: slideInFromTop 1s ease-out;
+            border-bottom-left-radius: 50px; /* Rounded bottom corners */
+            border-bottom-right-radius: 50px;
+            overflow: hidden; /* For background circles */
+            position: relative;
+        }
+
+        /* Hero Background Circles */
+        .hero-section::before,
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .hero-section::before {
+            width: 150px;
+            height: 150px;
+            top: 10%;
+            left: 5%;
+            animation: floatCircle 8s infinite alternate ease-in-out;
+        }
+
+        .hero-section::after {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 10%;
+            animation: floatCircle 10s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes floatCircle {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(20px, 30px) scale(1.05); opacity: 0.6; }
+        }
+
+
+        @keyframes slideInFromTop {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-section__title {
+            color: #1e3a8a;
+            font-family: 'Playfair Display', serif; /* Elegant font for hero title */
+            font-size: 3.8rem; /* Larger, more impactful title */
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section__subtitle {
+            font-size: 1.5rem;
+            color: #444;
+            max-width: 700px;
+            margin: 0 auto 30px auto;
+        }
+
+        .hero-section__cta-button {
+            padding: 15px 35px; /* Larger button */
+            background: linear-gradient(45deg, #00bfff, #007bff); /* Blue gradient button */
+            color: white;
+            border: none;
+            border-radius: 30px; /* Pill shape */
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 15px rgba(0, 191, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .hero-section__cta-button:hover {
+            background: linear-gradient(45deg, #007bff, #00bfff); /* Inverted gradient on hover */
+            box-shadow: 0 12px 20px rgba(0, 191, 255, 0.5);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .hero-section__cta-button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(0, 191, 255, 0.3);
+        }
+
+        /* --- Product Section --- */
+        .products-grid {
+            padding: 60px 20px; /* More padding */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px; /* Increased gap */
+            background-color: #f8fbff; /* Slightly different background for section */
+            border-top: 1px solid #e0e7ff;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 15px; /* Softer corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+            max-width: 320px; /* Slightly wider cards */
+            text-align: center;
+            padding: 25px; /* More padding inside card */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden; /* Ensure rounded corners clip properly */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #00bfff, #007bff); /* Top border gradient */
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px); /* Lift higher on hover */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25); /* More prominent shadow on hover */
+        }
+
+        .product-card__image {
+            width: 100%;
+            height: 220px; /* Fixed height for consistent image size */
+            object-fit: cover; /* Ensure image covers space */
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-card__image {
+            transform: scale(1.05); /* Zoom image on hover */
+        }
+
+        .product-card__title {
+            color: #1e3a8a;
+            font-size: 1.4rem; /* Larger title */
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-card__price {
+            color: #4CAF50; /* Green for price */
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .product-card__add-to-cart {
+            padding: 10px 20px;
+            background-color: #28a745; /* Green add to cart button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            width: 100%; /* Full width button */
+        }
+
+        .product-card__add-to-cart:hover {
+            background: var(--header-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(40, 167, 69, 0.3);
+        }
+        .product-card__add-to-cart:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Loading and Error Messages */
+        .info-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 50px 0;
+            grid-column: 1 / -1; /* Make it span all columns in the grid */
+        }
+        .error-message {
+            color: #d9534f; /* Red for errors */
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background: var(--header-bg);
+            color: white;
+            text-align: center;
+            padding: 25px; /* More padding */
+            margin-top: 60px; /* More space above footer */
+            font-size: 0.95rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartVoiceBtn {
+  background-color: #1f2937; /* Dark slate */;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cartVoiceBtn:hover {
+  background-color: #111827;
+  transform: scale(1.05);
+}
+
+#cartVoiceBtn:active {
+  transform: scale(0.95);
+}
+
+/* Optional: pulse effect when listening */
+#cartVoiceBtn.listening {
+  background-color: #10b981; /* Green while listening */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129, 0); }
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="main-header__logo">Talk2Trend
+              <button id="cartVoiceBtn" onclick="startCartVoice()" title="Voice Control">
+  🎤 
+</button>
+        </div>
+      
+        <div class="welcome-message" id="welcome">Welcome 👋</div>
+        <button id="darkModeToggle" aria-label="Toggle dark mode" style="margin-left:16px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#fff; color:#1e3c72; font-weight:600;">
+  🌙
+</button>
+
+    </header>
+    
+
+    <nav class="main-nav">
+        <a href="index.html" class="main-nav__link main-nav__link--active">Home</a>
+        <a href="product.html" class="main-nav__link">Products</a>
+        <a href="cart.html" class="main-nav__link">Cart</a>
+        <a href="#" id="auth-link" class="main-nav__link">Login</a>
+        <a href="signup.html" class="main-nav__link">Signup</a>
+        <a href="dashboard.html" class="main-nav__link">Dashboard</a>
+    </nav>
+
+    <section class="hero-section">
+        <h1 class="hero-section__title">Discover the Latest in Fashion</h1>
+        <p class="hero-section__subtitle">Trendy, Affordable, and You. Elevate your style effortlessly.</p>
+        <button class="hero-section__cta-button" onclick="window.location.href='product.html'">Shop Now</button>
+    </section>
+
+    <section class="products-grid" id="productsGrid">
+        <p class="info-message">Loading products...</p>
+    </section>
+
+    <footer class="main-footer">
+        &copy; 2025 Talk2Trend. All rights reserved.
+    </footer>
+
+    <script>
+        // --- User Authentication & Welcome Message Logic ---
+        const userName = localStorage.getItem("name");
+        const userToken = localStorage.getItem("token"); // Assuming 'token' is where JWT is stored
+        const welcomeElement = document.getElementById("welcome");
+        const authNavigationLink = document.getElementById("auth-link");
+
+        if (userToken && userName) {
+            welcomeElement.textContent = `Welcome, ${userName} 👋`;
+            authNavigationLink.textContent = "Logout";
+            authNavigationLink.href = "#";
+            authNavigationLink.onclick = () => {
+                localStorage.clear();
+                window.location.href = "login.html";
+            };
+        } else {
+            welcomeElement.textContent = "Welcome 👋";
+            authNavigationLink.textContent = "Login";
+            authNavigationLink.href = "login.html";
+            authNavigationLink.onclick = null;
+        }
+
+        // --- Add to Cart Logic (localStorage-based) ---
+        function addToCart(productId, name, price, imageUrl) {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingItem = cart.find(item => item.id === productId); 
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id: productId, name, price, imageUrl, quantity: 1 });
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert(`${name} added to cart!`);
+        }
+
+        // --- Active Navigation Link Styling ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = document.querySelectorAll('.main-nav__link');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split("/").pop();
+                // Special handling for index.html if it's the root or product.html if it's the product list
+                if (linkPath === currentPath || (currentPath === '' && linkPath === 'index.html')) {
+                    link.classList.add('main-nav__link--active');
+                }
+            });
+            
+            // --- Call the function to fetch and display products on DOMContentLoaded ---
+            fetchAndDisplayProducts();
+        });
+
+        // --- Function to Shuffle an Array (Fisher-Yates) ---
+        // This function is included in the backend now, but harmless to keep here.
+        // It's not called explicitly on the fetched products array in this updated script.
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // --- Function to Fetch and Display Products from Node.js Backend ---
+        async function fetchAndDisplayProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '<p class="info-message">Loading products...</p>'; // Show loading message
+
+            try {
+                // *** IMPORTANT CHANGE: Request only 4 products for the homepage ***
+                const response = await fetch('http://localhost:5000/api/products?limit=4', { // <--- MODIFIED URL
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`, // Use the userToken from localStorage
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('API Error:', errorData);
+                    let errorMessage = `Failed to fetch products: ${errorData.message || response.statusText}`;
+                    
+                    if (response.status === 401 || response.status === 403) {
+                        errorMessage = "Session expired or unauthorized. Please log in again.";
+                        localStorage.clear(); // Clear token if unauthorized
+                        // Optional: Redirect to login page immediately if desired:
+                        // window.location.href = "login.html";
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                // The backend is now responsible for limiting and shuffling.
+                let products = await response.json(); 
+
+                productsGrid.innerHTML = ''; // Clear loading message
+
+                if (products.length === 0) {
+                    productsGrid.innerHTML = '<p class="info-message">No products found at the moment.</p>';
+                    return;
+                }
+
+                // Render each product card
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.classList.add('product-card');
+
+                    // Ensure these property names match what your Node.js backend sends.
+                    // Based on my suggested backend code, it sends 'id', 'name', 'price', 'imageUrl'.
+                    const productId = product.id; 
+                    const productName = product.name;
+                    const productPrice = product.price;
+                    const productImageUrl = product.image; // <--- ASSUMING BACKEND SENDS 'imageUrl'
+
+                    productCard.innerHTML = `
+                        <img src="${productImageUrl}" alt="${productName}" class="product-card__image" />
+                        <h3 class="product-card__title">${productName}</h3>
+                        <p class="product-card__price">₹${productPrice.toLocaleString('en-IN')}</p>
+                       
+                    `;
+                    productsGrid.appendChild(productCard);
+                });
+
+            } catch (error) {
+                console.error('Error fetching or displaying products:', error);
+                productsGrid.innerHTML = `<p class="info-message error-message">${error.message}. Please try again later.</p>`;
+            }
+        }
+    </script>
+
+    
+    <script>
+  // Apply saved mode or system preference
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const stored = localStorage.getItem("theme"); // "dark" / "light"
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+      toggleBtn.style.background = "#2c2f44";
+      toggleBtn.style.color = "#f0f4ff";
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleBtn.textContent = "🌙";
+      toggleBtn.style.background = "#fff";
+      toggleBtn.style.color = "#1e3c72";
+    }
+  }
+
+  const toggleBtn = document.getElementById("darkModeToggle");
+  // Initialize
+  if (stored) {
+    applyTheme(stored);
+  } else if (prefersDark) {
+    applyTheme("dark");
+  } else {
+    applyTheme("light");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+
+  window.setDarkMode = (on) => {
+  const toggleBtn = document.getElementById("darkModeToggle") || document.getElementById("dmToggle");
+  if (on) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+    if (toggleBtn) { toggleBtn.textContent = "☀️"; toggleBtn.style.background = "#2c2f44"; toggleBtn.style.color = "#e6e8ff"; }
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+    if (toggleBtn) { toggleBtn.textContent = "🌙"; toggleBtn.style.background = "#fff"; toggleBtn.style.color = "#1e3c72"; }
+  }
+};
+window.toggleDarkMode = () => {
+  const isDark = document.documentElement.classList.contains("dark");
+  window.setDarkMode(!isDark);
+};
+
+</script>
+
+
+
+
+
+
+    <script src="voice.js"></script>
+</body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch((err) => console.log("❌ SW registration failed", err));
+}
+</script>
+
+</html>
