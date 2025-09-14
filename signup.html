@@ -185,6 +185,33 @@
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
+                // ✅ Frontend conditions
+    if (!name) {
+        alert("Full Name is required");
+        return;
+    }
+
+    // Email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Enter a valid email address");
+        return;
+    }
+
+    // Password strength check
+    if (password.length < 9) {
+        alert("Password must be at least 8 characters long");
+        return;
+    }
+    if (!/[A-Z]/.test(password)) {
+        alert("Password must contain at least one uppercase letter");
+        return;
+    }
+    if (!/[0-9]/.test(password)) {
+        alert("Password must contain at least one number");
+        return;
+    }
+
             try {
                 const res = await fetch("http://localhost:5000/api/auth/signup", {
                     method: "POST",

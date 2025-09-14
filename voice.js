@@ -227,6 +227,8 @@ if (command.match(/\b(toggle dark mode|switch theme)\b/)) {
     }
   }
 
+
+
   // Export functions globally (optional if used by buttons)
   window.startCartVoice = startCartVoice;
   window.stopCartVoice = stopCartVoice;

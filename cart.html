@@ -446,6 +446,7 @@ body {
         <button id="cartVoiceBtn" onclick="startCartVoice()" title="Voice Control">
   🎤
 </button>
+
         <div class="main-header__logo">Talk2Trend</div>
         <div class="welcome-message" id="welcome">Welcome 👋</div>
         <button id="darkModeToggle" aria-label="Toggle dark mode" style="margin-left:16px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#fff; color:#1e3c72; font-weight:600;">
@@ -814,6 +815,57 @@ body {
                 alert("Please fill in all required shipping details.");
                 return;
             }
+
+            // ✅ Validation conditions
+if (!fullName) {
+  alert("Full Name is required");
+  return;
+}
+
+if (!/^\d{10}$/.test(phoneNumber)) {
+  alert("Enter a valid 10-digit phone number");
+  return;
+}
+
+if (!street) {
+  alert("Street address cannot be empty");
+  return;
+}
+
+if (!size) {
+  alert("Please select a size");
+  return;
+}
+
+if (!city) {
+  alert("City is required");
+  return;
+}
+
+if (!state) {
+  alert("State is required");
+  return;
+}
+
+if (!/^\d{6}$/.test(zipCode)) {  // assuming Indian PIN code
+  alert("Enter a valid 6-digit ZIP code");
+  return;
+}
+
+if (!country) {
+  alert("Country is required");
+  return;
+}
+
+// Delivery date check: must be today or later
+const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+if (!deliveryDate || deliveryDate < today) {
+  alert("Please select a valid delivery date");
+  return;
+}
+
+// ✅ If all conditions pass
+console.log("Shipping details valid ✅");
 
             // Calculate totalAmount from the global `cartItems` (ensuring it's up-to-date)
             const totalAmount = cartItems.reduce((sum, item) => sum + (item.productId.price * item.quantity), 0);
