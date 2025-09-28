@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile - Talk2Trend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f4ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .profile-container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    h2 {
+      color: #1e3a8a;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .info-group {
+      margin-bottom: 20px;
+    }
+
+    .info-label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .info-value {
+      margin-top: 4px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto 0;
+    }
+
+    button:hover {
+      background-color: #274caa;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Talk2Trend</h1>
+    <p>Your Profile</p>
+  </header>
+
+  <div class="profile-container">
+    <h2 id="welcome">Loading Profile...</h2>
+
+    <div class="info-group">
+      <div class="info-label">Email:</div>
+      <div class="info-value" id="profile-email">...</div>
+    </div>
+
+    <div class="info-group">
+      <div class="info-label">Phone:</div>
+      <div class="info-value" id="profile-phone">...</div>
+    </div>
+
+    <div class="info-group">
+      <div class="info-label">Address:</div>
+      <div class="info-value" id="profile-address">...</div>
+    </div>
+
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    async function loadProfile() {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please login first.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/profile", {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+
+        const data = await res.json();
+
+        if (data.name) {
+          document.getElementById("welcome").textContent = `Welcome, ${data.name}`;
+          document.getElementById("profile-email").textContent = data.email || "N/A";
+          document.getElementById("profile-phone").textContent = data.phone || "Not Provided";
+          document.getElementById("profile-address").textContent = data.address || "Not Provided";
+        } else {
+          throw new Error("Invalid token");
+        }
+      } catch (err) {
+        alert("Session expired. Please login again.");
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      window.location.href = "login.html";
+    }
+
+    loadProfile();
+  </script>
+
+</body>
+
+
+</html>
+

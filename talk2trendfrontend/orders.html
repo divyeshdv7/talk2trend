@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Talk2Trend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+
+        :root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(90deg, #1e3c72, #2a5298);
+  --nav-bg: #274caa;
+  --text: #333;
+  --muted: #666;
+  --price: #4CAF50;
+  --btn-bg: #28a745;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+.dark {
+  --bg: #0f111a;
+  --card-bg: #1f2436;
+  --header-bg: linear-gradient(90deg, #0d1b44, #1f295f);
+  --nav-bg: #1a274f;
+  --text: #e6e8ff;
+  --muted: #a0a8c0;
+  --price: #7ed957;
+  --btn-bg: #256a3d;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+/* Base usage via variables */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color .3s, color .3s;
+}
+.main-header { background: var(--header-bg); box-shadow: 0 4px 10px var(--shadow); }
+.main-nav { background-color: var(--nav-bg); box-shadow: 0 2px 8px var(--shadow); }
+.product-card { background-color: var(--card-bg); box-shadow: 0 8px 20px var(--shadow); }
+.product-card__price { color: var(--price); }
+.product-card__add-to-cart { background-color: var(--btn-bg); color: var(--btn-text); }
+.main-footer { background: var(--header-bg); box-shadow: 0 -4px 10px var(--shadow); }
+
+        body {
+
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-header {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            padding: 20px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header__logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #dbeafe;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-nav {
+            background-color: #274caa;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .main-nav__link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav__link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00bfff;
+            transition: width 0.3s ease-out;
+        }
+
+        .main-nav__link:hover::after,
+        .main-nav__link--active::after {
+            width: 100%;
+        }
+
+        .main-nav__link:hover {
+            color: #00bfff;
+            transform: translateY(-2px);
+        }
+
+        .confirmation-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #ffffff;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            min-height: 300px;
+        }
+
+        .confirmation-container h1 {
+            font-family: 'Playfair Display', serif;
+            color: #28a745;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-container p {
+            font-size: 1.3rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .confirmation-container .order-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-top: 10px;
+        }
+
+        .confirmation-container .back-home-btn,
+        .confirmation-container .view-orders-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .confirmation-container .back-home-btn {
+            background-color: #007bff;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .confirmation-container .back-home-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .confirmation-container .view-orders-btn {
+            background-color: #1e3c72; /* Darker blue */
+            color: white;
+        }
+
+        .confirmation-container .view-orders-btn:hover {
+            background-color: #1a305e;
+            transform: translateY(-2px);
+        }
+
+        .main-footer {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: auto; /* Push footer to the bottom */
+            font-size: 0.95rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartVoiceBtn {
+  background-color: #1f2937; /* Dark slate */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cartVoiceBtn:hover {
+  background-color: #111827;
+  transform: scale(1.05);
+}
+
+#cartVoiceBtn:active {
+  transform: scale(0.95);
+}
+
+/* Optional: pulse effect when listening */
+#cartVoiceBtn.listening {
+  background-color: #10b981; /* Green while listening */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129, 0); }
+}
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="main-header__logo">Talk2Trend
+            <button id="cartVoiceBtn" onclick="startCartVoice()" title="Voice Control">
+  🎤
+</button></h1>
+        </div>
+        <div class="welcome-message" id="welcome">Welcome 👋</div>
+        <button id="darkModeToggle" aria-label="Toggle dark mode" style="margin-left:16px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#fff; color:#1e3c72; font-weight:600;">
+  🌙
+</button>
+    </header>
+
+    <nav class="main-nav">
+        <a href="index.html" class="main-nav__link">Home</a>
+        <a href="product.html" class="main-nav__link">Products</a>
+        <a href="cart.html" class="main-nav__link">Cart</a>
+        <a href="#" id="auth-link" class="main-nav__link">Login</a>
+        <a href="signup.html" class="main-nav__link">Signup</a>
+        <a href="dashboard.html" class="main-nav__link">Dashboard</a>
+    </nav>
+
+    <div class="confirmation-container">
+        <h1>🎉 Order Placed Successfully!</h1>
+        <p>Thank you for your purchase.</p>
+        <p class="order-id">Your Order ID: <span id="displayOrderId">Loading...</span></p>
+        <a href="index.html" class="back-home-btn">Continue Shopping</a>
+        <a href="dashboard.html" class="view-orders-btn">View My Orders</a> </div>
+
+    <footer class="main-footer">
+        &copy; 2025 Talk2Trend. All rights reserved.
+    </footer>
+
+    <script>
+        // --- User Authentication & Welcome Message Logic (Copied for consistency) ---
+        const userName = localStorage.getItem("name");
+        const userToken = localStorage.getItem("token");
+        const welcomeElement = document.getElementById("welcome");
+        const authNavigationLink = document.getElementById("auth-link");
+
+        if (userToken && userName) {
+            welcomeElement.textContent = `Welcome, ${userName} 👋`;
+            authNavigationLink.textContent = "Logout";
+            authNavigationLink.href = "#";
+            authNavigationLink.onclick = () => {
+                localStorage.clear();
+                window.location.href = "login.html";
+            };
+        } else {
+            welcomeElement.textContent = "Welcome 👋";
+            authNavigationLink.textContent = "Login";
+            authNavigationLink.href = "login.html";
+            authNavigationLink.onclick = null;
+        }
+
+        // --- Display Order ID from URL ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            const displayOrderId = document.getElementById('displayOrderId');
+
+            if (orderId) {
+                displayOrderId.textContent = orderId;
+            } else {
+                displayOrderId.textContent = 'N/A (Order ID not found)';
+            }
+
+            // Set active link for navigation (if applicable)
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = document.querySelectorAll('.main-nav__link');
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split("/").pop();
+                if (linkPath === currentPath) {
+                    link.classList.add('main-nav__link--active');
+                }
+            });
+        });
+    </script>
+
+     <script>
+  // Apply saved mode or system preference
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const stored = localStorage.getItem("theme"); // "dark" / "light"
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+      toggleBtn.style.background = "#2c2f44";
+      toggleBtn.style.color = "#f0f4ff";
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleBtn.textContent = "🌙";
+      toggleBtn.style.background = "#fff";
+      toggleBtn.style.color = "#1e3c72";
+    }
+  }
+
+  const toggleBtn = document.getElementById("darkModeToggle");
+  // Initialize
+  if (stored) {
+    applyTheme(stored);
+  } else if (prefersDark) {
+    applyTheme("dark");
+  } else {
+    applyTheme("light");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+
+  
+</script>
+
+<script src="voice.js"></script>
+</body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch((err) => console.log("❌ SW registration failed", err));
+}
+</script>
+
+</html>

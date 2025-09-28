@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+    <meta charset="UTF-8" />
+    <title>Talk2Trend | User Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+
+        :root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(90deg, #1e3c72, #2a5298);
+  --nav-bg: #274caa;
+  --text: #333;
+  --muted: #666;
+  --price: #4CAF50;
+  --btn-bg: #28a745;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+.dark {
+  --bg: #0f111a;
+  --card-bg: #1f2436;
+  --header-bg: linear-gradient(90deg, #0d1b44, #1f295f);
+  --nav-bg: #1a274f;
+  --text: #e6e8ff;
+  --muted: #a0a8c0;
+  --price: #7ed957;
+  --btn-bg: #256a3d;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+/* Base usage via variables */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color .3s, color .3s;
+}
+.main-header { background: var(--header-bg); box-shadow: 0 4px 10px var(--shadow); }
+.main-nav { background-color: var(--nav-bg); box-shadow: 0 2px 8px var(--shadow); }
+.product-card { background-color: var(--card-bg); box-shadow: 0 8px 20px var(--shadow); }
+.product-card__price { color: var(--price); }
+.product-card__add-to-cart { background-color: var(--btn-bg); color: var(--btn-text); }
+.main-footer { background: var(--header-bg); box-shadow: 0 -4px 10px var(--shadow); }
+
+        /* General Body & Container Styling */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg);
+            color: #263238; /* Darker, sophisticated text color */
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased; /* Better font rendering */
+            -moz-osx-font-smoothing: grayscale; /* Better font rendering */
+        }
+
+        .container {
+            max-width: 1300px; /* Slightly wider container for more space */
+            margin: auto;
+            padding: 3rem; /* Generous padding */
+        }
+
+        /* --- Navbar Styling --- */
+        .navbar {
+            background-color: #263238; /* Deep dark blue-gray for navbar */
+            color: white;
+            padding: 1.4rem 3rem; /* More vertical padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.18); /* Soft, deep shadow */
+        }
+
+        .navbar h1 {
+            font-size: 2.1rem; /* Prominent title */
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px; /* Subtle negative letter spacing */
+        }
+
+        .logout-btn {
+            background-color: #ef5350; /* Softer, slightly vibrant red */
+            color: white;
+            border: none;
+            padding: 0.8rem 1.6rem; /* Generous padding */
+            border-radius: 12px; /* More rounded */
+            cursor: pointer;
+            font-weight: 600; /* Medium-bold */
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn:hover {
+            background-color: #d32f2f; /* Darker red on hover */
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Welcome Card --- */
+        .welcome-card {
+            background: linear-gradient(to right top, #6a82fb, #a77df5); /* Soft blue to lavender-purple gradient, fashion-forward */
+            color: #ffffff;
+            padding: 3.5rem; /* More generous padding */
+            border-radius: 25px; /* Significantly more rounded corners */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Stronger, softer shadow */
+            margin-bottom: 3.5rem; /* Increased spacing */
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Hide overflow for potential background effects */
+        }
+
+        /* Subtle background pattern for welcome card */
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .welcome-card h2 {
+            font-size: 2.8rem; /* Even larger welcome text */
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Subtle text shadow */
+        }
+
+        .welcome-card p {
+            font-size: 1.2rem; /* Slightly larger text */
+            opacity: 0.98;
+            margin-bottom: 0.6rem;
+        }
+
+        /* --- Grid Cards (Product, Cart) --- */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); /* Larger min-width */
+            gap: 2.5rem; /* Increased gap */
+            margin-bottom: 3.5rem;
+        }
+
+        .card {
+            background: #fff;
+            padding: 2.8rem; /* Increased padding */
+            border-radius: 20px; /* More rounded corners */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* Enhanced, softer shadow */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smoother transition */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 220px; /* Ensure consistent height */
+            border: 1px solid #e0e0e0; /* Subtle border */
+        }
+
+        .card:hover {
+            transform: translateY(-12px); /* More pronounced lift */
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.7rem; /* Larger heading */
+            color: #4285F4; /* Google Blue for emphasis */
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        .card p {
+            font-size: 1.15rem;
+            color: #616161; /* Softer body text color */
+            margin-top: 0.6rem;
+            flex-grow: 1; /* Allows paragraph to take up available space */
+        }
+
+        /* --- Buttons inside Cards --- */
+        .btn, .btn-cart {
+            display: inline-block;
+            padding: 15px 30px; /* More padding for better clickability */
+            text-decoration: none;
+            font-weight: 600; /* Medium-bold */
+            border-radius: 12px; /* More rounded buttons */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Button shadow */
+            margin-top: 1.8rem; /* Consistent spacing from content */
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn {
+            background-color: #4CAF50; /* Green for success/positive action */
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: #388E3C; /* Darker green on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cart {
+            background-color: #4285F4; /* Google Blue for cart/wishlist */
+            color: white;
+        }
+
+        .btn-cart:hover {
+            background-color: #3367d6; /* Darker blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .container {
+                padding: 2.5rem;
+            }
+            .navbar h1 {
+                font-size: 1.9rem;
+            }
+            .welcome-card {
+                padding: 3rem;
+            }
+            .welcome-card h2 {
+                font-size: 2.4rem;
+            }
+            .grid-cards {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+            .card {
+                padding: 2.2rem;
+                min-height: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .navbar {
+                flex-direction: column;
+                padding: 1.5rem;
+            }
+            .navbar h1 {
+                margin-bottom: 1rem;
+            }
+            .welcome-card {
+                padding: 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .welcome-card h2 {
+                font-size: 2rem;
+            }
+            .welcome-card p {
+                font-size: 1.05rem;
+            }
+            .grid-cards {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+                gap: 2rem;
+            }
+            .card {
+                padding: 2rem;
+            }
+            .card h3 {
+                font-size: 1.5rem;
+            }
+            .card p {
+                font-size: 1rem;
+            }
+            .btn, .btn-cart {
+                padding: 12px 25px;
+                font-size: 0.95rem;
+            }
+        }
+        #cartVoiceBtn {
+  background-color: #1f2937; /* Dark slate */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cartVoiceBtn:hover {
+  background-color: #111827;
+  transform: scale(1.05);
+}
+
+#cartVoiceBtn:active {
+  transform: scale(0.95);
+}
+
+/* Optional: pulse effect when listening */
+#cartVoiceBtn.listening {
+  background-color: #10b981; /* Green while listening */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129, 0); }
+}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <h1> Talk2Trend Dashboard
+        <button id="cartVoiceBtn" onclick="startCartVoice()" title="Voice Control">
+  🎤 
+</button>
+ <button id="cartVoiceBtn" onclick="stopCartVoice()" title="Voice Control">
+  🔴 
+</button><button id="darkModeToggle" aria-label="Toggle dark mode" style="margin-left:16px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#fff; color:#1e3c72; font-weight:600;">
+  🌙
+</button></h1>
+
+
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+    
+
+    <main class="container">
+        <section class="welcome-card">
+            <h2 id="welcomeMsg">Welcome, Fashion Enthusiast! 👋</h2>
+            <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+            <p>Manage your style journey with ease.</p>
+        </section>
+
+        <section class="grid-cards">
+            <div class="card">
+                <h3>🛍️ Discover Products</h3>
+                <p>New arrivals and trending styles await!</p>
+                <a href="product.html" class="btn">View Products</a>
+            </div>
+
+            <div class="card">
+                <h3>🛒 Your Cart</h3>
+                <p>Review items in your shopping cart.</p>
+                <a onclick="goToCart()" class="btn-cart">Go to Cart</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Retrieve user data directly from localStorage
+        const token = localStorage.getItem('token');
+        const savedEmail = localStorage.getItem('email');
+        const savedName = localStorage.getItem('name');
+
+        // Redirect if not logged in
+        if (!token) {
+            alert("Please login first to access the dashboard.");
+            window.location.href = "login.html";
+        }
+
+        // Populate user details immediately on page load
+        document.getElementById("userEmail").textContent = savedEmail || "N/A";
+        document.getElementById("welcomeMsg").textContent = `Welcome, ${savedName ? savedName.split(' ')[0] : 'Fashion Enthusiast'} 👋`;
+
+        // The fetchDashboardData function is no longer needed as no dynamic data is displayed.
+        // If your backend dashboard API served no purpose other than the previously removed sections,
+        // then this entire function can be removed.
+        // For simplicity and convenience, it is now removed.
+
+        function logout() {
+            localStorage.clear(); // Clear all stored user data
+            window.location.href = "login.html"; // Redirect to login page
+        }
+
+        function goToCart() {
+            window.location.href = "cart.html"; // Redirect to cart page
+        }
+    </script>
+
+     <script>
+  // Apply saved mode or system preference
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const stored = localStorage.getItem("theme"); // "dark" / "light"
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+      toggleBtn.style.background = "#2c2f44";
+      toggleBtn.style.color = "#f0f4ff";
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleBtn.textContent = "🌙";
+      toggleBtn.style.background = "#fff";
+      toggleBtn.style.color = "#1e3c72";
+    }
+  }
+
+  const toggleBtn = document.getElementById("darkModeToggle");
+  // Initialize
+  if (stored) {
+    applyTheme(stored);
+  } else if (prefersDark) {
+    applyTheme("dark");
+  } else {
+    applyTheme("light");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+ window.setDarkMode = (on) => {
+  const toggleBtn = document.getElementById("darkModeToggle") || document.getElementById("dmToggle");
+  if (on) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+    if (toggleBtn) { toggleBtn.textContent = "☀️"; toggleBtn.style.background = "#2c2f44"; toggleBtn.style.color = "#e6e8ff"; }
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+    if (toggleBtn) { toggleBtn.textContent = "🌙"; toggleBtn.style.background = "#fff"; toggleBtn.style.color = "#1e3c72"; }
+  }
+};
+window.toggleDarkMode = () => {
+  const isDark = document.documentElement.classList.contains("dark");
+  window.setDarkMode(!isDark);
+};
+
+</script>
+
+    <script src="voice.js"></script>
+
+</body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch((err) => console.log("❌ SW registration failed", err));
+}
+</script>
+
+</html>

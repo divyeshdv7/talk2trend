@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sign Up - Talk2Trend</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif; /* Modern font */
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Vibrant purple-blue gradient, consistent with login */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Use min-height for better responsiveness */
+            color: #fff;
+            overflow: hidden; /* Prevent scrollbar from background effects */
+            position: relative;
+        }
+
+        /* Abstract Background Shapes (for visual interest, consistent with login) */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            filter: blur(50px); /* Soft blur effect */
+            z-index: -1;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            animation: moveShape1 15s infinite alternate ease-in-out;
+        }
+
+        body::after {
+            width: 250px;
+            height: 250px;
+            bottom: -50px;
+            right: -50px;
+            animation: moveShape2 18s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveShape1 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.1); }
+        }
+
+        @keyframes moveShape2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-80px, -30px) scale(1.2); }
+        }
+
+        /* Container Styles (consistent with login) */
+        .signup-container {
+            background: rgba(255, 255, 255, 0.15); /* More prominent transparent white */
+            padding: 50px; /* Increased padding */
+            border-radius: 20px; /* Softer rounded corners */
+            width: 100%;
+            max-width: 420px; /* Slightly wider for better spacing */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Deeper shadow */
+            backdrop-filter: blur(20px); /* Stronger glassmorphism */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
+            text-align: center;
+            animation: fadeIn 1s ease-out; /* Fade-in animation */
+            position: relative;
+            z-index: 1; /* Ensure container is above background shapes */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .signup-container__title {
+            color: #ffffff;
+            margin-bottom: 30px; /* More space below title */
+            font-size: 2.5em; /* Larger, bolder title */
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input Field Styles (consistent with login) */
+        .form-input {
+            width: calc(100% - 24px); /* Account for padding */
+            padding: 14px 12px; /* Increased padding */
+            margin: 10px 0; /* More vertical space */
+            border: none;
+            border-radius: 10px; /* Softer rounded corners */
+            font-size: 17px; /* Slightly larger text */
+            background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white */
+            color: #333;
+            outline: none; /* Remove default outline */
+            transition: all 0.3s ease; /* Smooth transitions for focus */
+        }
+
+        .form-input::placeholder {
+            color: #888;
+            opacity: 0.8; /* Slightly less opaque placeholder */
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.5); /* Blue glow on focus */
+            transform: translateY(-2px); /* Slight lift on focus */
+        }
+
+        /* Button Styles (consistent with login) */
+        .submit-button {
+            width: 100%;
+            padding: 15px; /* More prominent button */
+            background: linear-gradient(45deg, #00bfff, #007bff); /* Blue gradient button */
+            color: white;
+            border: none;
+            font-size: 18px; /* Larger font */
+            font-weight: 600; /* Bolder text */
+            border-radius: 10px; /* Softer rounded corners */
+            cursor: pointer;
+            margin-top: 25px; /* More space above button */
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4); /* Shadow for button */
+            transition: all 0.3s ease; /* Smooth transitions */
+            letter-spacing: 0.5px;
+        }
+
+        .submit-button:hover {
+            background: linear-gradient(45deg, #007bff, #00bfff); /* Inverted gradient on hover */
+            box-shadow: 0 8px 20px rgba(0, 191, 255, 0.6); /* Enhanced shadow on hover */
+            transform: translateY(-3px); /* Slight lift on hover */
+        }
+
+        .submit-button:active {
+            transform: translateY(0); /* Press effect */
+            box-shadow: 0 3px 10px rgba(0, 191, 255, 0.4);
+        }
+
+        /* Link Styles (New for Signup: Back to Login) */
+        .signup-link-group {
+            margin-top: 30px; /* More space */
+            color: #e0f2ff; /* Lighter blue for text */
+            font-size: 0.95em;
+        }
+
+        .signup-link-group__link {
+            color: #ffffff;
+            text-decoration: none; /* Remove default underline */
+            font-weight: 600; /* Bolder link text */
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+
+        .signup-link-group__link:hover {
+            color: #00bfff; /* Bright blue on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2 class="signup-container__title">Create Account</h2>
+        <form id="signupForm">
+            <input type="text" id="name" class="form-input" placeholder="Full Name" required />
+            <input type="email" id="email" class="form-input" placeholder="Email Address" required />
+            <input type="password" id="password" class="form-input" placeholder="Password" required />
+            <button type="submit" class="submit-button">Sign Up</button>
+        </form>
+        <div class="signup-link-group">
+            Already have an account? <a href="login.html" class="signup-link-group__link">Login</a>
+        </div>
+    </div>
+
+    <script>
+        // No changes to JavaScript functionality. It remains exactly the same as your original.
+        document.getElementById("signupForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+                // ✅ Frontend conditions
+    if (!name) {
+        alert("Full Name is required");
+        return;
+    }
+
+    // Email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Enter a valid email address");
+        return;
+    }
+
+    // Password strength check
+    if (password.length < 9) {
+        alert("Password must be at least 8 characters long");
+        return;
+    }
+    if (!/[A-Z]/.test(password)) {
+        alert("Password must contain at least one uppercase letter");
+        return;
+    }
+    if (!/[0-9]/.test(password)) {
+        alert("Password must contain at least one number");
+        return;
+    }
+
+            try {
+                const res = await fetch("http://localhost:5000/api/auth/signup", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ name, email, password }),
+                });
+
+                const data = await res.json();
+                console.log("Signup response:", res.status, data);
+
+                if (!res.ok) {
+                    alert("❌ Signup failed: " + data.msg);
+                } else {
+                    alert("✅ Signup successful! You can now login.");
+                    window.location.href = "login.html"; // redirect to login page
+                }
+            } catch (error) {
+                console.error("Signup fetch error:", error);
+                alert("Could not connect to server.");
+            }
+        });
+    </script>
+</body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch((err) => console.log("❌ SW registration failed", err));
+}
+</script>
+
+</html>

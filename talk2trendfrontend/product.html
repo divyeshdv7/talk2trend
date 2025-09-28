@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Talk2Trend - All Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    
+    <style>
+        :root {
+  --bg: #f0f4ff;
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(90deg, #1e3c72, #2a5298);
+  --nav-bg: #274caa;
+  --text: #333;
+  --muted: #666;
+  --price: #4CAF50;
+  --btn-bg: #28a745;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.15);
+}
+
+.dark {
+  --bg: #0f111a;
+  --card-bg: #1f2436;
+  --header-bg: linear-gradient(90deg, #0d1b44, #1f295f);
+  --nav-bg: #1a274f;
+  --text: #e6e8ff;
+  --muted: #a0a8c0;
+  --price: #7ed957;
+  --btn-bg: #256a3d;
+  --btn-text: #fff;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+/* Base usage via variables */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color .3s, color .3s;
+}
+.main-header { background: var(--header-bg); box-shadow: 0 4px 10px var(--shadow); }
+.main-nav { background-color: var(--nav-bg); box-shadow: 0 2px 8px var(--shadow); }
+.product-card { background-color: var(--card-bg); box-shadow: 0 8px 20px var(--shadow); }
+.product-card__price { color: var(--price); }
+.product-card__add-to-cart { background-color: var(--btn-bg); color: var(--btn-text); }
+.main-footer { background: var(--header-bg); box-shadow: 0 -4px 10px var(--shadow); }
+
+
+
+        /* Base Styles (Copied from index.html for consistency) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: white;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- Header --- */
+        .main-header {
+            background-color: var(--bg);
+            padding: 20px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .main-header__logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .welcome-message {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #dbeafe;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease;
+        }
+
+        /* --- Navigation --- */
+        .main-nav {
+            background-color: #274caa;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 15px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .main-nav__link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .main-nav__link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #00bfff;
+            transition: width 0.3s ease-out;
+        }
+
+        .main-nav__link:hover::after,
+        .main-nav__link--active::after {
+            width: 100%;
+        }
+
+        .main-nav__link:hover {
+            color: #00bfff;
+            transform: translateY(-2px);
+        }
+
+        /* --- Filters and Sort Controls (ENHANCED STYLES) --- */
+        .controls-section {
+            padding: 30px 20px;
+            background-color: #e6f0ff; /* Lighter background for controls */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center; /* Vertically align items */
+            gap: 25px; /* Spacing between controls */
+            border-bottom: 1px solid #d4e3ff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .control-group label {
+            white-space: nowrap; /* Prevent label from wrapping */
+            font-size: 1rem; /* Slightly smaller for labels */
+            color: #333; /* Darker label for contrast */
+        }
+
+        .control-group select {
+            padding: 10px 15px;
+            border: 2px solid #a7e1f8;
+            border-radius: 8px;
+            background-color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none; /* Remove default outline */
+            appearance: none; /* Remove default select arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%20viewBox%3D%220%200%20292.4%20292.4%22%3E%3Cpath%20fill%3D%22%232a5298%22%20d%3D%22M287%2C197.973L145.289%2C56.287c-3.159-3.16-8.25-3.16-11.409%2C0L5.396%2C197.973c-3.16%2C3.16-3.16%2C8.251%2C0%2C11.409h270.211C290.159%2C206.223%2C290.159%2C201.132%2C287%2C197.973z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px;
+            /* --- MODIFIED: Make the select box longer --- */
+            width: 220px; /* Adjust this value as needed */
+            /* --- END MODIFIED --- */
+        }
+
+        .control-group select:hover {
+            border-color: #00bfff;
+            box-shadow: 0 0 8px rgba(0, 191, 255, 0.2);
+        }
+        .control-group select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        /* --- Product Section --- */
+        .products-section-heading {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: #1e3a8a;
+            padding: 40px 20px 20px; /* Adjust padding for spacing */
+            margin-top: 20px; /* Space from controls */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .products-grid {
+            padding: 30px 20px 60px; /* Adjusted padding */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            background-color: #f8fbff;
+            border-top: 1px solid #e0e7ff; /* Lighter border */
+        }
+
+        .product-card {
+            background-color: var(--bg);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 320px;
+            text-align: center;
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #00bfff, #007bff);
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .product-card__image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover .product-card__image {
+            transform: scale(1.05);
+        }
+
+        .product-card__title {
+            color: #1e3a8a;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-card__price {
+            color: #4CAF50;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .product-card__add-to-cart {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+
+        .product-card__add-to-cart:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(40, 167, 69, 0.3);
+        }
+        .product-card__add-to-cart:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Loading and Error Messages */
+        .info-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 50px 0;
+            width: 100%; /* Ensure it spans the grid */
+        }
+        .error-message {
+            color: #d9534f;
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+            font-size: 0.95rem;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cartVoiceBtn {
+  background-color: #1f2937; /* Dark slate */
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#cartVoiceBtn:hover {
+  background-color: #111827;
+  transform: scale(1.05);
+}
+
+#cartVoiceBtn:active {
+  transform: scale(0.95);
+}
+
+/* Optional: pulse effect when listening */
+#cartVoiceBtn.listening {
+  background-color: #10b981; /* Green while listening */
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(16,185,129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129, 0); }
+}
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>👕 Talk2Trend 
+        <button id="cartVoiceBtn" onclick="startCartVoice()" title="Voice Control">
+  🎤
+</button>
+ <button id="cartVoiceBtn" onclick="stopCartVoice()" title="Voice Control">
+  🔴 
+</button></h1>
+        
+        <div class="welcome-message" id="welcome">Welcome 👋</div>
+        <button id="darkModeToggle" aria-label="Toggle dark mode" style="margin-left:16px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; background:#fff; color:#1e3c72; font-weight:600;">
+  🌙
+</button>
+    </header>
+
+    <nav class="main-nav">
+        <a href="index.html" class="main-nav__link">Home</a>
+        <a href="product.html" class="main-nav__link main-nav__link--active">Products</a>
+        <a href="cart.html" class="main-nav__link">Cart</a>
+        <a href="#" id="auth-link" class="main-nav__link">Login</a>
+        <a href="signup.html" class="main-nav__link">Signup</a>
+        <a href="dashboard.html" class="main-nav__link">Dashboard</a>
+    </nav>
+
+
+    <section class="controls-section">
+        <div class="control-group">
+            <label for="categoryFilter">Category:</label>
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                </select>
+        </div>
+
+        <div class="control-group">
+            <label for="priceSort">Sort by Price:</label>
+            <select id="priceSort">
+                <option value="default">Default</option>
+                <option value="asc">Low to High</option>
+                <option value="desc">High to Low</option>
+            </select>
+        </div>
+    </section>
+
+    <h2 class="products-section-heading">Our Latest Collection</h2>
+
+    <section class="products-grid" id="productsGrid">
+        <p class="info-message">Loading products...</p>
+    </section>
+
+    <footer class="main-footer">
+        &copy; 2025 Talk2Trend. All rights reserved.
+    </footer>
+
+    <script>
+        // --- User Authentication & Welcome Message Logic ---
+        const userName = localStorage.getItem("name");
+        const userToken = localStorage.getItem("token");
+        const welcomeElement = document.getElementById("welcome");
+        const authNavigationLink = document.getElementById("auth-link");
+
+        if (userToken && userName) {
+            welcomeElement.textContent = `Welcome, ${userName} 👋`;
+            authNavigationLink.textContent = "Logout";
+            authNavigationLink.href = "#";
+            authNavigationLink.onclick = () => {
+                localStorage.clear();
+                window.location.href = "login.html";
+            };
+        } else {
+            welcomeElement.textContent = "Welcome 👋";
+            authNavigationLink.textContent = "Login";
+            authNavigationLink.href = "login.html";
+            authNavigationLink.onclick = null;
+        }
+
+        // --- Add to Cart Logic (Now backend-driven) ---
+        // Define your backend URL here. Ensure it matches your Node.js server's address.
+        const BASE_URL = "http://localhost:5000";
+
+        async function addToCart(productId, name, price, imageUrl) {
+            // Ensure the user is logged in before adding to cart
+            if (!userToken) {
+                alert("Please log in to add items to your cart.");
+                window.location.href = "login.html"; // Redirect to login page
+                return; // Stop the function execution
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/cart/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${userToken}` // Send the user's authentication token
+                    },
+                    body: JSON.stringify({
+                        productId: productId, // The product's ID from your database
+                        quantity: 1 // Adding one quantity at a time
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("Error adding to cart:", errorData);
+                    let errorMessage = errorData.message || "Failed to add product to cart.";
+
+                    // Handle specific authentication/authorization errors
+                    if (response.status === 401 || response.status === 403) {
+                        errorMessage = "Session expired or unauthorized. Please log in again.";
+                        localStorage.clear(); // Clear local storage on auth errors
+                        // Optionally redirect to login: window.location.href = "login.html";
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                const data = await response.json();
+                console.log("Product added to cart successfully:", data);
+                alert(`${name} added to cart successfully!`); // User feedback
+
+            } catch (error) {
+                console.error('Failed to add to cart:', error);
+                alert(`Error adding ${name} to cart: ${error.message}`);
+            }
+        }
+
+        // --- Active Navigation Link Styling ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = document.querySelectorAll('.main-nav__link');
+
+            navLinks.forEach(link => {
+                const linkPath = link.getAttribute('href').split("/").pop();
+                if (linkPath === currentPath || (currentPath === '' && linkPath === 'index.html')) {
+                    link.classList.add('main-nav__link--active');
+                }
+            });
+            
+            // --- Fetch and Display Products ---
+            fetchAndDisplayProducts();
+        });
+
+        // --- Function to Fetch and Display Products from Node.js Backend ---
+        let allProducts = []; // Store all fetched products to enable client-side filtering/sorting
+
+        async function fetchAndDisplayProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '<p class="info-message">Loading products...</p>';
+
+            try {
+                // Fetch ALL active products from the backend
+                const response = await fetch(`${BASE_URL}/api/products`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('API Error:', errorData);
+                    let errorMessage = `Failed to fetch products: ${errorData.message || response.statusText}`;
+                    
+                    if (response.status === 401 || response.status === 403) {
+                        errorMessage = "Session expired or unauthorized. Please log in again.";
+                        localStorage.clear();
+                        // window.location.href = "login.html"; // Optional: redirect on auth error
+                    }
+                    throw new Error(errorMessage);
+                }
+
+                allProducts = await response.json(); // Store all products
+                
+                // Populate category filter and then render products
+                populateCategoryFilter(allProducts);
+                renderProducts(allProducts); // Initial render without filters/sort
+                
+            } catch (error) {
+                console.error('Error fetching or displaying products:', error);
+                productsGrid.innerHTML = `<p class="info-message error-message">${error.message}. Please try again later.</p>`;
+            }
+        }
+
+        // --- Populate Category Filter ---
+        function populateCategoryFilter(products) {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const categories = new Set();
+            products.forEach(product => {
+                if (product.category) {
+                    categories.add(product.category);
+                }
+            });
+
+            // Clear previous options except "All Categories"
+            while (categoryFilter.options.length > 1) {
+                categoryFilter.remove(1);
+            }
+
+            Array.from(categories).sort().forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categoryFilter.appendChild(option);
+            });
+        }
+
+        // --- Render Products (with filtering and sorting applied) ---
+        function renderProducts(productsToRender) {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = ''; // Clear existing products
+
+            if (productsToRender.length === 0) {
+                productsGrid.innerHTML = '<p class="info-message">No products found matching your criteria.</p>';
+                return;
+            }
+
+            productsToRender.forEach((product ,index)=> {
+                const productCard = document.createElement('div');
+                const serialNumber = index + 1;
+
+                productCard.classList.add('product-card');
+                 productCard.setAttribute("data-serial", serialNumber);
+
+
+                // IMPORTANT: Use product._id if your backend uses MongoDB's default _id
+                const productId = product._id; 
+                const productName = product.name;
+                const productPrice = product.price;
+                const productImageUrl = product.image; 
+
+                productCard.innerHTML = `
+                    <span class="serial-number">#${serialNumber}</span>
+                    <img src="${productImageUrl}" alt="${productName}" class="product-card__image" />
+                    <h3 class="product-name product-card__title">${productName}</h3>
+                    <p class="product-card__price">₹${productPrice.toLocaleString('en-IN')}</p>
+                    <button class="add-to-cart-button product-card__add-to-cart"
+
+                            onclick="addToCart(
+                                '${productId}',
+                                '${productName.replace(/'/g, "\\'")}', 
+                                ${productPrice},
+                                '${productImageUrl}'
+                            )">
+                        Add to Cart 
+                    </button>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            
+        }
+
+        // --- Apply Filters and Sorts (TRIGGERED BY DROPDOWN CHANGES) ---
+        const categoryFilter = document.getElementById('categoryFilter');
+        const priceSort = document.getElementById('priceSort');
+
+        function applyFiltersAndSort() {
+            let filteredProducts = [...allProducts]; // Start with a copy of all products
+
+            // Apply Category Filter
+            const selectedCategory = categoryFilter.value;
+            if (selectedCategory !== 'all') {
+                filteredProducts = filteredProducts.filter(product => product.category === selectedCategory);
+            }
+
+            // Apply Price Sort
+            const selectedSort = priceSort.value;
+            if (selectedSort === 'asc') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (selectedSort === 'desc') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            }
+            // If 'default', no specific sort is applied, relying on initial fetch order (or shuffle from backend)
+
+            renderProducts(filteredProducts); // Re-render the products with applied filters/sorts
+        }
+
+        // Event Listeners for filter and sort changes
+        categoryFilter.addEventListener('change', applyFiltersAndSort);
+        priceSort.addEventListener('change', applyFiltersAndSort);
+
+        // expose to voice.js
+window.applyFiltersAndSort = applyFiltersAndSort;
+window.categoryFilter = categoryFilter;
+window.priceSort = priceSort;
+
+
+    </script>
+    
+    
+
+    <script>
+  fetch('/api/products')
+  .then(res => res.json())
+  .then(products => {
+    const productsGrid = document.getElementById("productsGrid");
+
+    products.forEach((product, index) => {
+      const productId = product._id;
+      const productName = product.name;
+      const productPrice = product.price;
+      const productImageUrl = product.image;
+
+      const productCard = document.createElement("div");
+      productCard.className = "product-card";
+      productCard.setAttribute("data-serial", index + 1); // 🔹 Needed for voice
+
+      productCard.innerHTML = `
+        <div class="product-serial" style="font-weight:bold;">#${index + 1}</div>
+        <img src="${productImageUrl}" alt="${productName}" class="product-card__image" />
+        <h3 class="product-card__title">${productName}</h3>
+        <p class="product-card__price">₹${productPrice.toLocaleString('en-IN')}</p>
+        <button class="product-card__add-to-cart"
+          onclick="addToCart(
+            '${productId}',
+            '${productName.replace(/'/g, "\\'")}', 
+            ${productPrice},
+            '${productImageUrl}'
+          )">
+          Add to Cart
+        </button>
+      `;
+
+      productsGrid.appendChild(productCard);
+    });
+
+    // ✅ Make products globally available
+    window.products = products;
+  });
+
+</script>
+
+ <script>
+  // Apply saved mode or system preference
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const stored = localStorage.getItem("theme"); // "dark" / "light"
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.textContent = "☀️";
+      toggleBtn.style.background = "#2c2f44";
+      toggleBtn.style.color = "#f0f4ff";
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleBtn.textContent = "🌙";
+      toggleBtn.style.background = "#fff";
+      toggleBtn.style.color = "#1e3c72";
+    }
+  }
+
+  const toggleBtn = document.getElementById("darkModeToggle");
+  // Initialize
+  if (stored) {
+    applyTheme(stored);
+  } else if (prefersDark) {
+    applyTheme("dark");
+  } else {
+    applyTheme("light");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const newTheme = isDark ? "light" : "dark";
+    applyTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  });
+
+  window.setDarkMode = (on) => {
+  const toggleBtn = document.getElementById("darkModeToggle") || document.getElementById("dmToggle");
+  if (on) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+    if (toggleBtn) { toggleBtn.textContent = "☀️"; toggleBtn.style.background = "#2c2f44"; toggleBtn.style.color = "#e6e8ff"; }
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+    if (toggleBtn) { toggleBtn.textContent = "🌙"; toggleBtn.style.background = "#fff"; toggleBtn.style.color = "#1e3c72"; }
+  }
+};
+window.toggleDarkMode = () => {
+  const isDark = document.documentElement.classList.contains("dark");
+  window.setDarkMode(!isDark);
+};
+</script>
+
+
+
+<script src="voice.js"></script>
+
+
+</body>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("✅ Service Worker Registered"))
+    .catch((err) => console.log("❌ SW registration failed", err));
+}
+</script>
+
+</html>
