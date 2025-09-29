@@ -18,7 +18,11 @@ const app = express();
 
 
 // Middleware
-app.use(cors());           // Allow cross-origin requests
+app.use(cors({
+    origin: '*',      // allow all domains
+    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));          // Allow cross-origin requests
 app.use(express.json());   // Parse JSON bodies
 
 // ✅ Serve static files from frontend folder
