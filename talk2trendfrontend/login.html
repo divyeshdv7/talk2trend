@@ -12,19 +12,28 @@
     <style>
         /* Base Styles */
         body {
+
             margin: 0;
             font-family: 'Poppins', sans-serif; /* Modern font */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Vibrant purple-blue gradient */
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZSUyMGNvbW1lcmNlJTIwc3RvcmV8ZW58MHx8MHx8fDA%3D');
+             /* Your image URL */
+             background-size: cover;
+             background-position: center;
+             background-repeat: no-repeat;
+             background-attachment: fixed; /* Ensures background stays put on scroll (good for mobile performance) */
+
+
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh; /* Use min-height for better responsiveness */
             color: #fff;
-            overflow: hidden; /* Prevent scrollbar from background effects */
+            overflow-x: hidden; /* Prevent horizontal scrollbar on small screens */
             position: relative;
         }
 
         /* Abstract Background Shapes (for visual interest) */
+        /* Hidden on very small screens for better performance and focus */
         body::before,
         body::after {
             content: '';
@@ -66,8 +75,8 @@
             background: rgba(255, 255, 255, 0.15); /* More prominent transparent white */
             padding: 50px; /* Increased padding */
             border-radius: 20px; /* Softer rounded corners */
-            width: 100%;
-            max-width: 420px; /* Slightly wider for better spacing */
+            width: 90%; /* Responsive width */
+            max-width: 520px; /* Maximum width for large screens */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Deeper shadow */
             backdrop-filter: blur(20px); /* Stronger glassmorphism */
             border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
@@ -75,6 +84,7 @@
             animation: fadeIn 1s ease-out; /* Fade-in animation */
             position: relative;
             z-index: 1; /* Ensure container is above background shapes */
+            margin: 20px; /* Add margin for breathing room on all sides */
         }
 
         @keyframes fadeIn {
@@ -115,7 +125,7 @@
             transform: translateY(-2px); /* Slight lift on focus */
         }
 
-        /* Button Styles */
+        /* Button Styles (No major changes needed here, as it's full width) */
         .submit-button {
             width: 100%;
             padding: 15px; /* More prominent button */
@@ -161,6 +171,49 @@
             color: #00bfff; /* Bright blue on hover */
             text-decoration: underline; /* Underline on hover */
         }
+
+
+        /* ==================================== */
+        /* RESPONSIVENESS (Mobile Adjustments) */
+        /* ==================================== */
+
+        @media (max-width: 600px) {
+            /* Adjustments for typical mobile screens */
+
+            .login-container {
+                padding: 30px 20px; /* Reduce padding on smaller screens */
+                border-radius: 15px;
+                max-width: 100%; /* Take up full width minus margins */
+                margin: 10px; /* Smaller margin */
+            }
+
+            .login-container__title {
+                font-size: 2em; /* Slightly smaller title for mobile */
+                margin-bottom: 20px;
+            }
+
+            .form-input {
+                padding: 12px 10px; /* Reduce input padding */
+                font-size: 16px; /* Slightly smaller input font */
+            }
+
+            .submit-button {
+                padding: 14px; /* Slightly smaller button padding */
+                font-size: 16px;
+                margin-top: 20px;
+            }
+
+            .login-link-group {
+                margin-top: 20px;
+                font-size: 0.9em; /* Slightly smaller link text */
+            }
+
+            /* Hide the abstract shapes on smaller mobile devices for better performance/focus */
+            body::before,
+            body::after {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -177,7 +230,7 @@
     </div>
 
     <script>
-        // No changes to JavaScript functionality, it remains exactly the same as before.
+        // FUNCTIONALITY REMAINS IDENTICAL
         document.getElementById("loginForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -185,7 +238,7 @@
             const password = document.getElementById("password").value;
 
             try {
-                const res = await fetch("http://localhost:5000/api/auth/login", {
+                const res = await fetch("https://talk2trend-5.onrender.com/api/auth/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -219,10 +272,11 @@
 </body>
 
 <script>
+// SERVICE WORKER FUNCTIONALITY REMAINS IDENTICAL
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("✅ Service Worker Registered"))
-    .catch((err) => console.log("❌ SW registration failed", err));
+    navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("✅ Service Worker Registered"))
+        .catch((err) => console.log("❌ SW registration failed", err));
 }
 </script>
 

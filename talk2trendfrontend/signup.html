@@ -11,9 +11,17 @@
     <style>
         /* Base Styles */
         body {
+            
             margin: 0;
             font-family: 'Poppins', sans-serif; /* Modern font */
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Vibrant purple-blue gradient, consistent with login */
+           /* background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); /* Vibrant purple-blue gradient, consistent with login */
+             background-image: url('https://images.unsplash.com/photo-1443884590026-2e4d21aee71c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHN0b3JlfGVufDB8fDB8fHww');
+
+    /* ✅ Make image cover full screen without repeating */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             display: flex;
             justify-content: center;
             align-items: center;
@@ -66,7 +74,7 @@
             padding: 50px; /* Increased padding */
             border-radius: 20px; /* Softer rounded corners */
             width: 100%;
-            max-width: 420px; /* Slightly wider for better spacing */
+            max-width: 520px; /* Slightly wider for better spacing */
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Deeper shadow */
             backdrop-filter: blur(20px); /* Stronger glassmorphism */
             border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for definition */
@@ -213,7 +221,7 @@
     }
 
             try {
-                const res = await fetch("http://localhost:5000/api/auth/signup", {
+                const res = await fetch("https://talk2trend-5.onrender.com/api/auth/signup", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

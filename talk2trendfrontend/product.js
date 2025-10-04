@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const grid = document.getElementById("productGrid");
 
   try {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("https://talk2trend-5.onrender.com/api/products");
     const data = await res.json();
 
     if (!Array.isArray(data)) {
