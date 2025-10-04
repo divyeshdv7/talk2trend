@@ -125,7 +125,7 @@
             transform: translateY(-2px); /* Slight lift on focus */
         }
 
-        /* Button Styles (No major changes needed here, as it's full width) */
+        /* Button Styles */
         .submit-button {
             width: 100%;
             padding: 15px; /* More prominent button */
@@ -230,7 +230,7 @@
     </div>
 
     <script>
-        // FUNCTIONALITY REMAINS IDENTICAL
+        // FUNCTIONALITY REMAINS IDENTICAL (Fetch API login logic)
         document.getElementById("loginForm").addEventListener("submit", async function (e) {
             e.preventDefault();
 
@@ -272,7 +272,7 @@
 </body>
 
 <script>
-// SERVICE WORKER FUNCTIONALITY REMAINS IDENTICAL
+// SERVICE WORKER FUNCTIONALITY REMAINS IDENTICAL (PWA setup)
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
         .then(() => console.log("✅ Service Worker Registered"))
