@@ -7,355 +7,294 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         /* ======================================================== */
-        /* EFFICIENT DARK MODE SETUP & COLOR VARIABLES */
+        /* 1. CSS VARIABLES & THEME SETUP */
         /* ======================================================== */
         :root {
             --color-primary: #1e3c72;         /* Dark Blue */
             --color-accent: #00bfff;          /* Bright Blue */
-            --bg-light: #f0f4ff;              /* Light Background */
+            --bg-page: #f0f4ff;               /* Light Background */
             --bg-card: #ffffff;               /* Card Background */
-            --text-dark: #333;                /* Dark Text */
-            --text-light: #e6e8ff;            /* Light Text */
+            --text-color: #333;               /* Dark Text */
             --header-bg: linear-gradient(90deg, #1e3c72, #2a5298);
-            --shadow-light: rgba(0,0,0,0.15);
-            --side-nav-bg: #1e3c72;
+            --nav-bg: #274caa;
+            --btn-success: #28a745;
+            --btn-text: #fff;
+            --shadow: rgba(0,0,0,0.15);
         }
 
         html[data-theme="dark"] {
             --color-primary: #1f295f;
             --color-accent: #7ed957;          /* Bright Green */
-            --bg-light: #0f111a;
+            --bg-page: #0f111a;
             --bg-card: #1f2436;
-            --text-dark: #e6e8ff;
-            --text-light: #e6e8ff;
+            --text-color: #e6e8ff;
             --header-bg: linear-gradient(90deg, #0d1b44, #1f295f);
-            --shadow-light: rgba(0,0,0,0.6);
-            --side-nav-bg: #1a274f;
+            --nav-bg: #1a274f;
+            --btn-success: #256a3d;
+            --shadow: rgba(0,0,0,0.6);
         }
         
-        /* Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* 2. BASE STYLES & TYPOGRAPHY */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-page); 
+            color: var(--text-color); 
+            line-height: 1.6; 
+            transition: background-color .3s, color .3s; 
+            overflow-x: hidden; 
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            transition: background-color .3s, color .3s;
-            overflow-x: hidden;
-        }
-        
-        /* --- Header --- */
-        .main-header {
-            background: var(--header-bg);
-            box-shadow: 0 4px 10px var(--shadow-light);
-            padding: 20px 40px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .main-header__logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
+        /* 3. HEADER & NAVIGATION */
+        .main-header { 
+            background: var(--header-bg); 
+            box-shadow: 0 4px 10px var(--shadow); 
+            padding: 20px 40px; 
+            color: white; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            flex-wrap: wrap; 
             gap: 10px;
         }
-        
-        /* Voice/Dark Mode Button Styling */
-        .voice-btn, #darkModeToggle {
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            width: 44px;
-            height: 44px;
-            font-size: 1.2rem;
-            line-height: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s, background-color 0.3s;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        .main-header__logo { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.2rem; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
         }
-        .voice-btn:hover, #darkModeToggle:hover {
-            transform: scale(1.05);
-        }
-        #cartVoiceBtn { background-color: #1f2937; color: #ffffff; }
-        #cartVoiceBtn2 { background-color: #ef4444; color: #ffffff; }
-
-        /* --- Desktop Navigation --- */
-        .main-nav {
-            background-color: var(--color-primary);
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 15px 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        .welcome-message { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            color: #dbeafe; 
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); 
         }
 
-        .main-nav__link {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 5px 10px;
-            position: relative;
+        .main-nav { 
+            background-color: var(--nav-bg); 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); 
+        }
+        .main-nav__link { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.1rem; 
+            padding: 5px 10px; 
+            position: relative; 
             transition: color 0.3s;
         }
-        
-        .main-nav__link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-accent);
-            transition: width 0.3s ease-out;
+        .main-nav__link::after { 
+            content: ''; 
+            position: absolute; 
+            width: 0; 
+            height: 3px; 
+            bottom: -5px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background-color: var(--color-accent); 
+            transition: width 0.3s ease-out; 
         }
+        .main-nav__link:hover::after, .main-nav__link--active::after { width: 100%; }
 
-        .main-nav__link:hover::after,
-        .main-nav__link--active::after {
-            width: 100%;
+        /* 4. SIDE MENU */
+        #sideNav { 
+            position: fixed; 
+            top: 0; 
+            right: 0; 
+            height: 100%; 
+            width: 250px; 
+            background-color: var(--nav-bg); /* Use nav-bg for consistency */
+            box-shadow: -4px 0 15px rgba(0,0,0,0.4); 
+            transform: translateX(100%); 
+            transition: transform 0.3s ease-in-out; 
+            padding: 20px; 
+            z-index: 2000; 
+            display: none; 
         }
+        #sideNav.open { transform: translateX(0); }
+        #sideNav ul { list-style: none; padding: 0; margin-top: 50px; }
+        #sideNav ul li { margin: 20px 0; }
+        #sideNav ul li a { 
+            color: white; 
+            text-decoration: none; 
+            font-size: 1.2rem; 
+            display: block; 
+            padding: 8px 0; 
+            border-bottom: 2px solid transparent; 
+            transition: border-bottom 0.2s ease; 
+        }
+        #sideNav ul li a:hover, #sideNav ul li a.main-nav__link--active { border-bottom: 2px solid var(--color-accent); }
 
-        /* --- Side Menu Styling --- */
-        #sideNav {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 250px;
-            background-color: var(--side-nav-bg);
-            box-shadow: -4px 0 15px rgba(0, 0, 0, 0.4);
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-            padding: 20px;
-            z-index: 2000;
-            display: none;
-        }
-
-        #sideNav.open {
-            transform: translateX(0);
-        }
-
-        #sideNav ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 50px;
-        }
-
-        #sideNav ul li {
-            margin: 20px 0;
-        }
-
-        #sideNav ul li a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 1.2rem;
-            display: block;
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
-            transition: border-bottom 0.2s ease;
-        }
-
-        #sideNav ul li a:hover,
-        #sideNav ul li a.main-nav__link--active {
-            border-bottom: 2px solid var(--color-accent);
-        }
-
-        /* Menu Toggle Button (Hamburger) */
-        #menuToggle {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            display: none;
-            padding: 5px;
-            margin-left: 10px;
-            transition: opacity 0.3s;
-        }
-        
-        /* --- Hero Section --- */
-        .hero-section {
-            background: linear-gradient(135deg, #a7e1f8, #e0f2ff);
-            padding: 80px 20px;
-            text-align: center;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
-            position: relative;
-        }
-        
-        .hero-section h1 {
-            color: #1e3a8a;
-            font-family: 'Playfair Display', serif;
-            font-size: 3.8rem;
-            margin-bottom: 15px;
-        }
-
-        .hero-section__subtitle {
-            font-size: 1.5rem;
-            color: #444;
-            max-width: 700px;
-            margin: 0 auto 30px auto;
-        }
-
-        .hero-section__cta-button {
-            padding: 15px 35px;
-            background: linear-gradient(45deg, var(--color-accent), #007bff);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.15rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        .hero-section__cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* --- Products Grid --- */
-        .products-grid {
-            padding: 60px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            justify-content: center;
-            gap: 35px;
-            background-color: var(--bg-light);
-        }
-
-        .product-card {
-            background-color: var(--bg-card);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px var(--shadow-light);
-            text-align: center;
-            padding: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px var(--shadow-light);
-        }
-        
-        .product-card__image {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .product-card__title {
-            color: var(--color-primary);
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-        html[data-theme="dark"] .product-card__title {
-             color: var(--text-light); /* Ensure title color is visible in dark mode */
-        }
-
-        .product-card__price {
-            color: var(--color-accent);
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .product-card__add-to-cart {
-            padding: 12px 20px;
-            background-color: #28a745;
-            color: var(--btn-text);
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
+        /* 5. BUTTONS */
+        .icon-btn { 
+            border:none; 
+            border-radius:50%; 
+            cursor:pointer; 
+            width:44px; 
+            height:44px; 
+            font-size:18px; 
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
             transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%;
-            margin-top: auto;
+        }
+        .icon-btn:active { transform: scale(0.95); }
+        #cartVoiceBtn { background-color: #1f2937; color: #fff; }
+        #cartVoiceBtn2 { background-color: #ef4444; color: #fff; }
+
+        #darkModeToggle { 
+            padding:8px 12px; 
+            border:none; 
+            border-radius:6px; 
+            cursor:pointer; 
+            font-weight:600; 
+            transition: all 0.3s ease; 
+        }
+        
+        #menuToggle { 
+            background: none; 
+            border: none; 
+            color: white; 
+            font-size: 30px; 
+            cursor: pointer; 
+            padding: 5px;
+            display: none; /* Hide by default, show on mobile */
         }
 
-        /* --- Footer --- */
-        .main-footer {
-            background: var(--header-bg);
-            color: white;
-            text-align: center;
-            padding: 25px;
-            margin-top: 60px;
-            font-size: 0.95rem;
-            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        /* 6. HERO & PRODUCTS */
+        .hero-section { 
+            background: linear-gradient(135deg, #a7e1f8, #e0f2ff); 
+            padding: 80px 20px; 
+            text-align: center; 
+            border-bottom-left-radius: 50px; 
+            border-bottom-right-radius: 50px; 
+            overflow: hidden; 
+        }
+        .hero-section__title { 
+            color: #1e3a8a; 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3.8rem; 
+            margin-bottom: 15px; 
+        }
+        .hero-section__subtitle { 
+            font-size: 1.5rem; 
+            color: #444; 
+            max-width: 700px; 
+            margin: 0 auto 30px auto; 
+        }
+        .hero-section__cta-button { 
+            padding: 15px 35px; 
+            background: linear-gradient(45deg, var(--color-accent), #007bff); 
+            color: white; 
+            border: none; 
+            border-radius: 30px; 
+            font-size: 1.15rem; 
+            font-weight: 700; 
+            cursor: pointer; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease; 
+        }
+        
+        .products-grid { 
+            padding: 60px 20px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 35px; 
+            background-color: var(--bg-page); 
+        }
+        .product-card { 
+            background-color: var(--bg-card); 
+            border-radius: 15px; 
+            box-shadow: 0 8px 20px var(--shadow); 
+            width: 100%; 
+            max-width: 320px; 
+            text-align: center; 
+            padding: 25px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px var(--shadow); }
+
+        .product-card__image { width: 100%; height: 220px; object-fit: cover; border-radius: 10px; margin-bottom: 20px; }
+        .product-card__add-to-cart { 
+            padding: 10px 20px; 
+            background-color: var(--btn-success); 
+            color: var(--btn-text); 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: auto; 
+            transition: background-color 0.3s;
+        }
+        .product-card__add-to-cart:hover { filter: brightness(1.1); }
+
+
+        /* 7. TOAST & FOOTER */
+        #toast { 
+            position: fixed; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background-color: var(--btn-success); 
+            color: #fff; 
+            padding: 15px 25px; 
+            border-radius: 8px; 
+            font-weight:600; 
+            opacity:0; 
+            pointer-events:none; 
+            transition: opacity 0.4s ease; 
+            z-index:3000; 
+        }
+        .main-footer { 
+            background: var(--header-bg); 
+            color: white; 
+            text-align: center; 
+            padding: 25px; 
+            margin-top: 60px; 
+            font-size: 0.95rem; 
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2); 
         }
 
-        /* ======================================================== */
-        /* RESPONSIVE DESIGN: MEDIA QUERIES */
-        /* ======================================================== */
-        @media (max-width: 1024px) {
-            /* Hide desktop navigation and show side menu/toggle */
-            .main-nav {
-                display: none;
-            }
-            #menuToggle {
-                display: block;
-            }
-            #sideNav {
-                display: block;
-            }
-
-            .main-header {
-                padding: 15px 25px;
-            }
+        /* 8. RESPONSIVE DESIGN */
+        @media (max-width: 1024px) { 
+            /* Tablet/Mobile Landscape */
+            .main-nav { display: none; } 
+            #menuToggle { display: block; order: 2; margin-left: auto; } /* Show toggle, give it order priority */
+            #sideNav { display: block; } 
+            .main-header__logo { order: 1; }
+            #darkModeToggle { order: 3; }
+            .welcome-message { order: 4; width: 100%; text-align: center; } /* Push welcome to new line */
+            .main-header { padding: 15px 25px; }
         }
 
-        @media (max-width: 600px) {
-            .main-header {
-                padding: 10px 15px;
-                flex-wrap: wrap; 
-                gap: 10px;
-            }
-
-            .main-header__logo {
-                font-size: 1.5rem;
-                order: 1;
-            }
-            
-            /* Reorder for mobile flow: Logo (1), Menu (2), Welcome (3), Dark Mode (4) */
-            #menuToggle { order: 2; margin-left: auto; } 
-            .welcome-message { order: 3; width: 100%; text-align: center; } 
-            #darkModeToggle { order: 4; }
-
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-            
-            #sideNav {
-                width: 80%; 
-            }
+        @media (max-width: 600px) { 
+            /* Phone Portrait */
+            .main-header { padding: 10px 15px; }
+            .main-header__logo { font-size: 1.5rem; }
+            #sideNav { width: 80%; } 
+            .hero-section__title { font-size: 2rem; } 
+            .hero-section__subtitle { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-
-    <div id="sideNav">
+    <div id="sideNav" role="navigation" aria-label="Mobile Navigation Menu">
         <ul>
             <li><a href="index.html" class="side-nav__link">Home</a></li>
             <li><a href="product.html" class="side-nav__link">Products</a></li>
@@ -365,20 +304,19 @@
             <li><a href="dashboard.html" class="side-nav__link">Dashboard</a></li>
         </ul>
     </div>
+
     <header class="main-header">
         <div class="main-header__logo">
             Talk2Trend
-            <button id="cartVoiceBtn" onclick="startCartVoice()" title="Start Voice Control" class="voice-btn" aria-label="Start Voice Control for Cart">🎤</button>
-            <button id="cartVoiceBtn2" onclick="stopCartVoice()" title="Stop Voice Control" class="voice-btn" aria-label="Stop Voice Control">🔴</button>
+            <button id="cartVoiceBtn" class="icon-btn" onclick="startCartVoice()" aria-label="Start voice control for cart">🎤</button>
+            <button id="cartVoiceBtn2" class="icon-btn" onclick="stopCartVoice()" aria-label="Stop voice control">🔴</button>
         </div>
-        
-        <div class="welcome-message" id="welcome">Welcome 👋</div>
+        <div class="welcome-message" id="welcome" role="status">Welcome 👋</div>
         <button id="darkModeToggle" aria-label="Toggle dark and light mode">🌙</button>
-        <button id="menuToggle" aria-label="Open navigation menu">☰</button>
+        <button id="menuToggle" aria-label="Open navigation menu" aria-expanded="false">☰</button>
     </header>
-    
 
-    <nav class="main-nav">
+    <nav class="main-nav" role="navigation" aria-label="Primary Navigation">
         <a href="index.html" class="main-nav__link main-nav__link--active">Home</a>
         <a href="product.html" class="main-nav__link">Products</a>
         <a href="cart.html" class="main-nav__link">Cart</a>
@@ -388,8 +326,8 @@
     </nav>
 
     <main>
-        <section class="hero-section">
-            <h1>Discover the Latest in Fashion</h1>
+        <section class="hero-section" aria-label="Featured content and call to action">
+            <h1 class="hero-section__title">Discover the Latest in Fashion</h1>
             <p class="hero-section__subtitle">Trendy, Affordable, and You. Elevate your style effortlessly.</p>
             <button class="hero-section__cta-button" onclick="window.location.href='product.html'">Shop Now</button>
         </section>
@@ -403,197 +341,158 @@
         &copy; 2025 Talk2Trend. All rights reserved.
     </footer>
 
-    <script>
-        // --- Side Menu Logic ---
-        const sideNav = document.getElementById('sideNav');
-        const menuToggle = document.getElementById('menuToggle');
+    <div id="toast" role="alert" aria-live="polite"></div>
 
+    <script>
+        // --- Global Variables ---
+        const D = document;
+        const root = D.documentElement;
+        const sideNav = D.getElementById('sideNav');
+        const menuToggle = D.getElementById('menuToggle');
+        const welcomeEl = D.getElementById('welcome');
+        const authLink = D.getElementById('auth-link');
+        const sideAuthLink = D.getElementById('side-auth-link');
+        const toggleBtn = D.getElementById("darkModeToggle");
+        const userToken = localStorage.getItem("token");
+        const userName = localStorage.getItem("name");
+        
+        // --- 1. Side Menu Logic ---
         menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('open');
+            const isExpanded = sideNav.classList.toggle('open');
+            menuToggle.setAttribute('aria-expanded', isExpanded);
         });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const currentPath = window.location.pathname.split("/").pop();
-            const desktopNavLinks = document.querySelectorAll('.main-nav__link');
-            const sideNavLinks = document.querySelectorAll('.side-nav__link');
-            
-            const setActiveLink = (link) => {
-                 const linkPath = link.getAttribute('href').split("/").pop();
-                 if (linkPath === currentPath || (currentPath === '' && linkPath === 'index.html')) {
-                    link.classList.add('main-nav__link--active');
-                 }
-            }
+        // Close menu when a link is clicked
+        D.querySelectorAll('.side-nav__link').forEach(link => {
+            link.addEventListener('click', () => sideNav.classList.remove('open'));
+        });
 
-            desktopNavLinks.forEach(setActiveLink);
-            sideNavLinks.forEach(setActiveLink);
+        // --- 2. Initialization & Active Links ---
+        D.addEventListener("DOMContentLoaded", () => {
+            const path = window.location.pathname.split("/").pop();
+            const desktopLinks = D.querySelectorAll('.main-nav__link');
+            const sideLinks = D.querySelectorAll('.side-nav__link');
             
+            const setActive = (link) => {
+                const href = link.getAttribute('href').split("/").pop();
+                if (href === path || (path === '' && href === 'index.html')) {
+                    link.classList.add('main-nav__link--active');
+                }
+            }
+            desktopLinks.forEach(setActive);
+            sideLinks.forEach(setActive);
             fetchAndDisplayProducts();
         });
 
-        // --- User Auth & Welcome Message Logic ---
-        const userName = localStorage.getItem("name");
-        const userToken = localStorage.getItem("token"); 
-        const welcomeElement = document.getElementById("welcome");
-        const authNavigationLink = document.getElementById("auth-link");
-        const sideAuthNavigationLink = document.getElementById("side-auth-link");
-
+        // --- 3. Auth & Welcome Logic ---
         const handleLogout = () => {
-             localStorage.clear();
-             window.location.href = "login.html";
-        };
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
 
         if (userToken && userName) {
-            welcomeElement.textContent = `Welcome, ${userName} 👋`;
-            
-            authNavigationLink.textContent = "Logout";
-            authNavigationLink.href = "#";
-            authNavigationLink.onclick = handleLogout;
-            
-            sideAuthNavigationLink.textContent = "Logout";
-            sideAuthNavigationLink.href = "#";
-            sideAuthNavigationLink.onclick = handleLogout;
+            welcomeEl.textContent = `Welcome, ${userName} 👋`;
+            [authLink, sideAuthLink].forEach(link => {
+                link.textContent = 'Logout';
+                link.href = '#';
+                link.onclick = handleLogout;
+            });
         } else {
-            welcomeElement.textContent = "Welcome 👋";
-            
-            authNavigationLink.textContent = "Login";
-            authNavigationLink.href = "login.html";
-            authNavigationLink.onclick = null;
-            
-            sideAuthNavigationLink.textContent = "Login";
-            sideAuthNavigationLink.href = "login.html";
-            sideAuthNavigationLink.onclick = null;
+            welcomeEl.textContent = 'Welcome 👋';
         }
 
-        // --- Add to Cart Logic ---
-        function addToCart(productId, name, price, imageUrl) {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const existingItem = cart.find(item => item.id === productId); 
-
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ id: productId, name, price, imageUrl, quantity: 1 });
-            }
-            localStorage.setItem("cart", JSON.stringify(cart));
-            alert(`${name} added to cart!`);
+        // --- 4. Toast Notification ---
+        function showToast(message) {
+            const toast = D.getElementById('toast');
+            toast.textContent = message;
+            toast.style.opacity = 1;
+            setTimeout(() => { toast.style.opacity = 0; }, 2500);
         }
 
-        // --- Fetch and Display Products ---
+        // --- 5. Add to Cart Logic ---
+        function addToCart(id, name, price, image) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existing = cart.find(item => item.id === id);
+            
+            if (existing) { existing.quantity += 1; } 
+            else { cart.push({ id, name, price, image, quantity: 1 }); }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showToast(`${name} added to cart!`);
+        }
+
+        // --- 6. Fetch Products ---
         async function fetchAndDisplayProducts() {
-            const productsGrid = document.getElementById('productsGrid');
-            productsGrid.innerHTML = '<p class="info-message">Loading products...</p>';
-
+            const grid = D.getElementById('productsGrid');
+            grid.innerHTML = '<p class="info-message">Loading products...</p>';
             try {
-                const response = await fetch('https://talk2trend-5.onrender.com/api/products?limit=4', {
+                const res = await fetch('https://talk2trend-5.onrender.com/api/products?limit=4', {
                     method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${userToken}`,
-                        'Content-Type': 'application/json'
-                    }
+                    headers: { 'Authorization': `Bearer ${userToken}`, 'Content-Type': 'application/json' }
                 });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    let errorMessage = `Failed to fetch products: ${errorData.message || response.statusText}`;
-                    
-                    if (response.status === 401 || response.status === 403) {
-                        errorMessage = "Session expired or unauthorized. Please log in again.";
-                        localStorage.clear();
+                if (!res.ok) {
+                    const errData = await res.json();
+                    if (res.status === 401 || res.status === 403) { 
+                        localStorage.clear(); 
+                        throw new Error("Session expired or unauthorized. Please log in again."); 
                     }
-                    throw new Error(errorMessage);
+                    throw new Error(errData.message || res.statusText);
                 }
-
-                let products = await response.json(); 
-                productsGrid.innerHTML = ''; 
-
-                if (products.length === 0) {
-                    productsGrid.innerHTML = '<p class="info-message">No products found at the moment.</p>';
-                    return;
-                }
-
-                products.forEach(product => {
-                    const productCard = document.createElement('div');
-                    productCard.classList.add('product-card');
-
-                    const productId = product.id; 
-                    const productName = product.name;
-                    const productPrice = product.price;
-                    const productImageUrl = product.image;
-
-                    productCard.innerHTML = `
-                        <img src="${productImageUrl}" alt="${productName}" class="product-card__image" loading="lazy" />
-                        <h3 class="product-card__title">${productName}</h3>
-                        <p class="product-card__price">₹${productPrice.toLocaleString('en-IN')}</p>
-                        <button 
-                            class="product-card__add-to-cart" 
-                            onclick="addToCart('${productId}', '${productName.replace(/'/g, "\\'")}', ${productPrice}, '${productImageUrl}')"
-                            aria-label="Add ${productName} to cart"
-                        >
-                            Add to Cart
-                        </button>
+                const products = await res.json();
+                grid.innerHTML = '';
+                if (products.length === 0) { grid.innerHTML = '<p class="info-message">No products found at the moment.</p>'; return; }
+                
+                products.forEach(p => {
+                    const card = D.createElement('div');
+                    card.className = 'product-card';
+                    const pid = p._id || p.id; // Support both common ID names
+                    card.innerHTML = `
+                        <img src="${p.image}" alt="${p.name}" class="product-card__image" loading="lazy"/>
+                        <h3 class="product-card__title">${p.name}</h3>
+                        <p class="product-card__price">₹${p.price.toLocaleString('en-IN')}</p>
+                        <button class="product-card__add-to-cart" onclick="addToCart('${pid}','${p.name.replace(/'/g, "\\'")}',${p.price},'${p.image}')" aria-label="Add ${p.name} to cart">Add to Cart</button>
                     `;
-                    productsGrid.appendChild(productCard);
+                    grid.appendChild(card);
                 });
-
-            } catch (error) {
-                console.error('Error fetching or displaying products:', error);
-                productsGrid.innerHTML = `<p class="info-message error-message">Error: ${error.message}. Please check your connection and try again.</p>`;
+            } catch (err) {
+                console.error(err);
+                grid.innerHTML = `<p class="info-message error-message">Error: ${err.message}.</p>`;
             }
         }
-    </script>
 
-    
-    <script>
-        // --- EFFICIENT DARK MODE LOGIC ---
-        const root = document.documentElement;
-        const toggleBtn = document.getElementById("darkModeToggle");
-
+        // --- 7. Dark Mode Logic ---
         function applyTheme(theme) {
             root.setAttribute("data-theme", theme);
-            if (theme === "dark") {
-                if (toggleBtn) { 
-                    toggleBtn.textContent = "☀️"; 
-                    toggleBtn.style.background = "#2c2f44"; 
-                    toggleBtn.style.color = "#f0f4ff";
-                }
+            if (theme === 'dark') {
+                toggleBtn.textContent = '☀️'; 
+                toggleBtn.style.background = "#2c2f44"; 
+                toggleBtn.style.color = "#f0f4ff";
+                toggleBtn.setAttribute('aria-label', 'Switch to light mode');
             } else {
-                if (toggleBtn) { 
-                    toggleBtn.textContent = "🌙"; 
-                    toggleBtn.style.background = "#fff"; 
-                    toggleBtn.style.color = "#1e3c72"; 
-                }
+                toggleBtn.textContent = '🌙'; 
+                toggleBtn.style.background = "#fff"; 
+                toggleBtn.style.color = "#1e3c72";
+                toggleBtn.setAttribute('aria-label', 'Switch to dark mode');
             }
-            localStorage.setItem("theme", theme);
+            localStorage.setItem('theme', theme);
         }
 
-        const storedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
-        if (storedTheme) {
-            applyTheme(storedTheme);
-        } else if (prefersDark) {
-            applyTheme("dark");
-        } else {
-            applyTheme("light");
+        if (storedTheme) applyTheme(storedTheme);
+        else if (prefersDark) applyTheme('dark');
+        else applyTheme('light');
+        
+        toggleBtn.addEventListener('click', () => applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+        // --- 8. PWA Service Worker ---
+        if ("serviceWorker" in navigator) { 
+            navigator.serviceWorker.register("service-worker.js")
+                .then(() => console.log("✅ Service Worker Registered"))
+                .catch(err => console.log("❌ SW registration failed", err));
         }
-
-        toggleBtn.addEventListener("click", () => {
-            const currentTheme = root.getAttribute("data-theme");
-            const newTheme = currentTheme === "dark" ? "light" : "dark";
-            applyTheme(newTheme);
-        });
-
     </script>
-
-    <script src="voice.js"></script> 
+    <script src="voice.js"></script>
 </body>
-
-<script>
-    // --- PWA Service Worker Registration ---
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("service-worker.js")
-            .then(() => console.log("✅ Service Worker Registered"))
-            .catch((err) => console.log("❌ SW registration failed", err));
-    }
-</script>
 </html>
