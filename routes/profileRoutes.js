@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const auth = require('../middleware/auth'); // Your existing auth middleware
+const auth = require('../middleware/authMiddleware');
+const authenticateToken = require('../middleware/authMiddleware');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
